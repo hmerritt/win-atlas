@@ -7,6 +7,7 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
 -   [ ] Install
     -   [ ] Powershell 7
     -   [ ] Scoop apps
+    -   [ ] LTS Node.js with yarn
     -   [ ] Electron apps (via hardcoded installers)
         -   [ ] Slack
         -   [ ] Chrome
@@ -14,12 +15,18 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
         -   [ ] Arc
 -   [ ] Config files
     -   [ ] Powershell
+    -   [ ] CMD
     -   [ ] Starship
     -   [ ] WinSCP
 -   [ ] Visual
     -   [x] Set a custom wallpaper
     -   [x] Maximum wallpaper quality
     -   [ ] Create a new dev desktop
+-   [ ] Misc
+    -   [ ] context menu - firewall block
+    -   [ ] context menu - remove google drive
+    -   [ ] explorer - remove grouping
+    -   [ ] disable defender
 -   [ ] Turn on Windows features
     -   [ ] Hyper-V
     -   [ ] Virtual Machine Platform
