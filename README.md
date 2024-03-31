@@ -2,6 +2,31 @@
 
 An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transparent and lightweight modification to Windows, designed to optimize performance, privacy and usability._").
 
+## Todo:
+
+-   [ ] Install
+    -   [ ] Powershell 7
+    -   [ ] Scoop apps
+    -   [ ] Electron apps (via hardcoded installers)
+        -   [ ] Slack
+        -   [ ] Chrome
+        -   [ ] Brave
+        -   [ ] Arc
+-   [ ] Config files
+    -   [ ] Powershell
+    -   [ ] Starship
+    -   [ ] WinSCP
+-   [ ] Visual
+    -   [x] Set a custom wallpaper
+    -   [x] Maximum wallpaper quality
+    -   [ ] Create a new dev desktop
+-   [ ] Turn on Windows features
+    -   [ ] Hyper-V
+    -   [ ] Virtual Machine Platform
+    -   [ ] Windows Hypervisor Platform
+    -   [ ] Windows Sandbox
+    -   [ ] Windows Subsystem for Linux
+
 ## Atlas `README.md`:
 
 <h1 align="center">
