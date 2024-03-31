@@ -17,8 +17,9 @@ reg import "$env:windir\AtlasDesktop\3. Configuration\Network Discovery\Network 
 # Set visual effects
 Start-Process -FilePath "$env:windir\AtlasDesktop\3. Configuration\Visual Effects\Atlas Visual Effects (default).cmd" -ArgumentList '/silent' -WindowStyle Hidden
 
-# Pin 'Videos' and 'Music' folders to Home/Quick Acesss
+# Pin 'User', 'Videos', and 'Music' folders to Home/Quick Access
 $o = new-object -com shell.application
+$o.Namespace("$env:userprofile").Self.InvokeVerb('pintohome')
 $o.Namespace("$env:userprofile\Videos").Self.InvokeVerb('pintohome')
 $o.Namespace("$env:userprofile\Music").Self.InvokeVerb('pintohome')
 
