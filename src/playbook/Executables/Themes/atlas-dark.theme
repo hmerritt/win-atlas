@@ -3,7 +3,7 @@ DisplayName=Atlas Dark
 ThemeId={FB5C68CD-E525-4324-9830-18BFE1746747}
 
 [Control Panel\Desktop]
-Wallpaper=%windir%\AtlasModules\Wallpapers\atlas-dark.png
+Wallpaper=%windir%\AtlasModules\Wallpapers\atlas-dark.jpg
 Pattern=
 MultimonBackgrounds=0
 PicturePosition=4

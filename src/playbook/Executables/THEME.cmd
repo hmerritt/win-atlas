@@ -22,12 +22,12 @@ for /d %%a in ("%ProgramData%\Microsoft\Windows\SystemData\*") do (
 
 :: set default lockscreen
 :: https://admx.help/?Category=Windows_11_2022&Policy=Microsoft.Policies.ControlPanelDisplay::CPL_Personalization_ForceDefaultLockScreen
-reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v LockScreenImage /t REG_SZ /d "%windir%\AtlasModules\Wallpapers\lockscreen.png" /f
+reg add "HKLM\Software\Policies\Microsoft\Windows\Personalization" /v LockScreenImage /t REG_SZ /d "%windir%\AtlasModules\Wallpapers\lockscreen.jpg" /f
 
 exit /b
 
 :ALLUSERS
-if defined win11 reg add "HKU\%~1\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes" /v "ThemeMRU" /t REG_SZ /d "%windir%\resources\Themes\atlas-dark.theme;%windir%\resources\Themes\atlas-light.theme;%windir%\resources\Themes\atlas-legacy.theme;" /f > nul
+if defined win11 reg add "HKU\%~1\SOFTWARE\Microsoft\Windows\CurrentVersion\Themes" /v "ThemeMRU" /t REG_SZ /d "%windir%\resources\Themes\atlas-dark.theme;%windir%\resources\Themes\atlas-light.theme;" /f > nul
 
 :: Set sound scheme to 'No Sounds'
 reg add "HKU\%~1\AppEvents\Schemes" /ve /d ".None" /f > nul

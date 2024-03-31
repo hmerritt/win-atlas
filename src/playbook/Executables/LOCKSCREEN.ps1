@@ -1,5 +1,5 @@
 # Credit: https://superuser.com/a/1343640
-$imagePath = "$env:windir\AtlasModules\Wallpapers\lockscreen.png"
+$imagePath = "$env:windir\AtlasModules\Wallpapers\lockscreen.jpg"
 
 $newImagePath = [System.IO.Path]::GetDirectoryName($imagePath) + '\' + (New-Guid).Guid + [System.IO.Path]::GetExtension($imagePath)
 Copy-Item $imagePath $newImagePath
