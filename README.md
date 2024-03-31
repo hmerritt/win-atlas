@@ -34,6 +34,10 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [ ] Windows Sandbox
     -   [ ] Windows Subsystem for Linux
 
+## ⚠️ WARNING ⚠️
+
+This program modifies Windows _somewhat significantly_, proceed with caution.
+
 ## Atlas `README.md`:
 
 <h1 align="center">
