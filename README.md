@@ -26,7 +26,6 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [ ] context menu - firewall block
     -   [ ] context menu - remove google drive
     -   [ ] explorer - remove grouping
-    -   [ ] disable defender
 -   [x] Turn on Windows features
     -   [x] Hyper-V
     -   [x] Virtual Machine Platform
