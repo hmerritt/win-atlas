@@ -6,22 +6,22 @@ actions:
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
     value: 'Manufacturer'
-    data: 'Atlas Team'
+    data: 'hmerritt/win-atlas'
     type: REG_SZ
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
     value: 'Model'
-    data: 'AtlasOS v0.3.2'
+    data: 'AtlasOS v0.1.20'
     type: REG_SZ
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
     value: 'SupportURL'
-    data: 'https://discord.atlasos.net'
+    data: 'https://github.com/hmerritt/win-atlas'
     type: REG_SZ
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
     value: 'SupportPhone'
-    data: 'https://github.com/Atlas-OS/Atlas'
+    data: 'https://github.com/hmerritt/win-atlas'
     type: REG_SZ
   - !registryValue:
     path: 'HKLM\SOFTWARE\Atlas'
