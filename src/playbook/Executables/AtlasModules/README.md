@@ -4,14 +4,14 @@ Some of the Playbook contains binary executables. This file provides some verifi
 The root of the file paths listed here starts in `src\playbook\Executables`.
 
 ### Multi-Choice
-- Path: `\AtlasModules\Tools\multichoice.exe`
-- SHA256 Hash: `6AB2FF0163AFE0FAC4E7506F9A63293421A1880076944339700A59A06578927D`
-- Source: https://github.com/Atlas-OS/Atlas-Utilities/releases/download/multichoice-v0.4/multichoice-compressed.exe
-- Repository: https://github.com/Atlas-OS/Atlas-Utilities
-- Version: v0.4
-- Renamed to `multichoice.exe`
-- License: [GNU General Public License v3.0](https://github.com/Atlas-OS/utilities/blob/main/LICENSE)
-- Last Verified: 8/9/2023 by Xyueta
+
+-   Path: `\AtlasModules\Tools\multichoice.exe`
+-   Source: https://github.com/Atlas-OS/Atlas-Utilities/releases/download/multichoice-v0.4/multichoice-compressed.exe
+-   Repository: https://github.com/Atlas-OS/Atlas-Utilities
+-   Version: v0.4
+-   Renamed to `multichoice.exe`
+-   License: [GNU General Public License v3.0](https://github.com/Atlas-OS/utilities/blob/main/LICENSE)
+-   Last Verified: 8/9/2023 by Xyueta
 
 ## SetTimerResolution & MeasureSleep
 - Path: `\AtlasModules\Tools\SetTimerResolution.exe`
