@@ -1,10 +1,9 @@
 param (
+	# Browsers
 	[switch]$Chrome,
 	[switch]$Brave,
 	[switch]$Firefox,
-	[switch]$MPV,
-	[switch]$MPCHC,
-	[switch]$VLC,
+	# Code editor
 	[switch]$NotepadPlusPlus,
 	[switch]$VisualStudioCode,
 	[switch]$VSCodium
@@ -18,6 +17,10 @@ param (
 $tempDir = Join-Path -Path $env:TEMP -ChildPath $([System.Guid]::NewGuid())
 New-Item $tempDir -ItemType Directory -Force | Out-Null
 Push-Location $tempDir
+
+####################
+##     OPTIONS    ##
+####################
 
 # Brave
 if ($Brave) {
@@ -60,69 +63,135 @@ if ($Chrome) {
 	exit
 }
 
-#################
-##    MEDIA    ##
-#################
-
-# mpv
-# if ($mpv) {
-#	Write-Host "Installing mpv..."
-#	& curl.exe -LSs "https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi" -o "$tempDir\chrome.msi"
-#	Start-Process -FilePath "$tempDir\chrome.msi" -WindowStyle Hidden -ArgumentList '/qn' -Wait 2>&1 | Out-Null
-#	exit
-#}
-
-# MPC-HC
-if ($mpchc) {
-	Write-Host "Installing MPC-HC..."
-	$latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/clsid2/mpc-hc/releases/latest"
-	$link = $latestRelease.assets | Where-Object { $_.browser_download_url -like "*x64.exe" } | Select-Object -ExpandProperty browser_download_url
-	& curl.exe -LSs "$link" -o "$tempDir\mpc-hc.exe"
-	Start-Process -FilePath "$tempDir\mpc-hc.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART' -Wait 2>&1 | Out-Null
-	exit
-}
-
-# VLC
-if ($vlc) {
-	Write-Host "Installing VLC..."
-	$baseUrl = "https://get.videolan.org/vlc/last/win64/"
-	$fileName = $((Invoke-WebRequest -Uri $baseUrl -UseBasicParsing).Links | Where-Object { $_.Href -like 'vlc*.exe' } | Select-Object -First 1 -ExpandProperty Href)
-	& curl.exe -LSs "$baseUrl$fileName" -o "$tempDir\vlc.exe"
-	Start-Process -FilePath "$tempDir\vlc.exe" -WindowStyle Hidden -ArgumentList '/S' -Wait 2>&1 | Out-Null
-	exit
-}
-
-# Notepad++
-if ($npp) {
-	Write-Host "Installing Notepad++..."
-	$latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/notepad-plus-plus/notepad-plus-plus/releases/latest"
-	$link = $latestRelease.assets | Where-Object { $_.browser_download_url -like "*x64.exe" } | Select-Object -ExpandProperty browser_download_url
-	& curl.exe -LSs "$link" -o "$tempDir\npp.exe"
-	Start-Process -FilePath "$tempDir\npp.exe" -WindowStyle Hidden -ArgumentList '/S' -Wait 2>&1 | Out-Null
-	exit
-}
-
-# VSCode
-if ($vscode) {
-	Write-Host "Installing VSCode..."
-	& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
-	Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
-	exit
-}
- 
-# VSCodium
-if ($vscodium) {
-	Write-Host "Installing VSCodium..."
-	$latestRelease = Invoke-RestMethod -Uri "https://api.github.com/repos/VSCodium/vscodium/releases/latest"
-	$link = $latestRelease.assets | Where-Object { $_.browser_download_url -like "*VSCodiumSetup-x64*" -and $_.browser_download_url -like "*.exe" } | Select-Object -ExpandProperty browser_download_url
-	& curl.exe -LSs "$link" -o "$tempDir\vscodium.exe"
-	Start-Process -FilePath "$tempDir\vscodium.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
-	exit
-}
-
 ####################
 ##    Software    ##
 ####################
+
+# Scoop
+Set-ExecutionPolicy RemoteSigned -scope CurrentUser
+Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+# Scoop basics
+scoop install git
+scoop bucket add extras
+scoop bucket add nonportable
+scoop bucket add hmerritt https://github.com/hmerritt/scoop-bucket
+scoop update
+
+# Essential
+scoop install 7zip
+scoop install irfanview
+scoop install irfanviewplugins
+scoop install mpc-hc
+scoop install notepadplusplus
+
+# Media
+scoop install foobar2000
+scoop install mpv
+scoop install vlc
+
+# Programming languages
+scoop install gcc
+scoop install make
+scoop install go
+scoop install lua
+scoop install nvm # nodejs version manager. Run `nvm install` as admin
+scoop install php
+scoop install python
+scoop install rust
+scoop install tinygo
+
+# CLI tools
+scoop install aria2
+scoop install cloc
+scoop install composer
+scoop install curl
+scoop install dark
+scoop install dezoomify-rs
+scoop install ffmpeg
+scoop install fspop
+scoop install gifsk
+scoop install git
+scoop install grep
+scoop install jq
+scoop install lessmsi
+scoop install mediainfo
+scoop install nconvert
+scoop install nsis
+scoop install nssm # the Non-Sucking Service Manager
+scoop install openssli
+scoop install yt-dlp
+scoop install zoxides
+
+# Security
+scoop install keeweb
+scoop install malwarebytes
+scoop install veracrypt
+scoop install wireguard-np
+
+# Misc
+#scoop install google-backup-and-sync
+scoop install audacity
+scoop install bulk-rename-utility
+scoop install dupeguru
+scoop install everything
+scoop install flac
+scoop install icaros-np
+scoop install lite-xl
+scoop install losslesscut
+scoop install mkvtoolnix
+scoop install mp3tag
+scoop install rufus
+scoop install scoop-search
+scoop install sharex
+scoop install soulseekqt
+scoop install speccy
+scoop install spek
+scoop install sshfs-np
+scoop install starship
+scoop install syncthing
+scoop install unifiedremote
+scoop install windirstat
+scoop install winfsp-np
+scoop install winscp
+scoop install wireshark
+scoop install xnconvert
+
+# Pin apps that update (too) frequently
+scoop hold gcc
+scoop hold git
+scoop hold go
+scoop hold make
+scoop hold mkvtoolnix
+scoop hold nssm
+scoop hold nvm
+scoop hold php
+scoop hold python
+scoop hold rufus
+scoop hold vlc
+
+############################
+##    Manual installers   ##
+############################
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+
+Write-Host "Installing Nodejs & yarn..."
+nvm install --lts
+nvm use --lts
+corepack enable
+corepack prepare yarn@stable --activate
+yarn set version stable
+npm -g i tsc nx
+
+Write-Host "Installing VSCode..."
+& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
+Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
+
+Write-Host "Installing Powershell 7..."
+& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
+& msiexec.exe /package "$tempDir\PowerShell-7.msi" /quiet DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
@@ -157,12 +226,6 @@ $num = 0; foreach ($a in $vcredists.GetEnumerator()) {
 	& curl.exe -LSs "$($a.Name)" -o "$vcredist"
 	Start-Process -FilePath $vcredist -WindowStyle Hidden -ArgumentList $a.Value -Wait 2>&1 | Out-Null
 }
-
-# 7-Zip
-$website = 'https://7-zip.org/'
-$download = $website + ((Invoke-WebRequest $website -UseBasicParsing).Links.href | Where-Object { $_ -like "a/7z2301-x64.exe" })
-& curl.exe -LSs $download -o "$tempDir\7zip.exe"
-Start-Process -FilePath "$tempDir\7zip.exe" -WindowStyle Hidden -ArgumentList '/S' -Wait 2>&1 | Out-Null
 
 # Legacy DirectX runtimes
 & curl.exe -LSs "https://download.microsoft.com/download/8/4/A/84A35BF1-DAFE-4AE8-82AF-AD2AE20B6B14/directx_Jun2010_redist.exe" -o "$tempDir\directx.exe"
