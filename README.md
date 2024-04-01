@@ -8,11 +8,15 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [x] Scoop apps
     -   [x] Powershell 7
     -   [x] LTS Node.js with yarn
-    -   [ ] Electron apps (via hardcoded installers)
-        -   [ ] Slack
-        -   [ ] Chrome
-        -   [ ] Brave
-        -   [ ] Arc
+    -   [ ] Hardcoded installers
+        -   [ ] [Arc](https://releases.arc.net/windows/prod/Arc.appinstaller)
+        -   [ ] [Docker](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
+        -   [ ] [GitKraken](https://release.gitkraken.com/windows/GitKrakenSetup.exe)
+        -   [ ] [Google backup and sync](https://www.google.com/intl/en-GB/drive/download)
+        -   [ ] [Obsidian](https://obsidian.md/)
+        -   [ ] [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/install#installing-with-windows-executable-file-via-github)
+        -   [ ] [Slack](https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe)
+        -   [ ] [Wireguard](https://download.wireguard.com/windows-client/wireguard-installer.exe)
 -   [ ] Config files
     -   [ ] Powershell
     -   [ ] CMD
@@ -32,6 +36,7 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [x] Windows Hypervisor Platform
     -   [x] Windows Sandbox
     -   [x] Windows Subsystem for Linux
+    -   [ ] WSL2 + install Ubuntu LTS
 
 ## ⚠️ WARNING ⚠️
 
