@@ -5,9 +5,9 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
 ## Todo:
 
 -   [ ] Install
-    -   [ ] Powershell 7
-    -   [ ] Scoop apps
-    -   [ ] LTS Node.js with yarn
+    -   [x] Scoop apps
+    -   [x] Powershell 7
+    -   [x] LTS Node.js with yarn
     -   [ ] Electron apps (via hardcoded installers)
         -   [ ] Slack
         -   [ ] Chrome
