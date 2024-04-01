@@ -2,11 +2,7 @@ param (
 	# Browsers
 	[switch]$Chrome,
 	[switch]$Brave,
-	[switch]$Firefox,
-	# Code editor
-	[switch]$NotepadPlusPlus,
-	[switch]$VisualStudioCode,
-	[switch]$VSCodium
+	[switch]$Firefox
 )
 
 # ----------------------------------------------------------------------------------------------------------- #
@@ -38,7 +34,8 @@ if ($Brave) {
 		if ($processesFound) {
 			Write-Host "Still running BraveSetup."
 			Start-Sleep -Seconds 2
-		} else {
+		}
+		else {
 			Remove-Item "$tempDir" -ErrorAction SilentlyContinue -Force -Recurse
 		}
 	} until (!$processesFound)
@@ -70,7 +67,7 @@ if ($Chrome) {
 # Scoop
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
 # Scoop basics
 scoop install git
@@ -131,7 +128,6 @@ scoop install veracrypt
 scoop install wireguard-np
 
 # Misc
-#scoop install google-backup-and-sync
 scoop install audacity
 scoop install bulk-rename-utility
 scoop install dupeguru
@@ -175,7 +171,7 @@ scoop hold vlc
 ##    Manual installers   ##
 ############################
 
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
 Write-Host "Installing Nodejs & yarn..."
 nvm install --lts
@@ -192,6 +188,12 @@ Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList 
 Write-Host "Installing Powershell 7..."
 & curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
 & msiexec.exe /package "$tempDir\PowerShell-7.msi" /quiet DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+Install-Module VirtualDesktop
+
+# Config
+# Needs to be within `%windir%\AtlasModules`
+# New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell"
+# New-Item -ItemType Directory -Path "$env:USERPROFILE\.config"
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
@@ -201,23 +203,23 @@ $modernArgs = "/install /quiet /norestart"
 
 $vcredists = @{
 	# 2005 - version 8.0.50727.6195 (MSI 8.0.61000/8.0.61001) SP1
-	"https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x64.exe" = $legacyArgs1
-	"https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x86.exe" = $legacyArgs1
+	"https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x64.exe"       = $legacyArgs1
+	"https://download.microsoft.com/download/8/B/4/8B42259F-5D70-43F4-AC2E-4B208FD8D66A/vcredist_x86.exe"       = $legacyArgs1
 	# 2008 - version 9.0.30729.6161 (EXE 9.0.30729.5677) SP1
-	"https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe" = $legacyArgs1
-	"https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe" = $legacyArgs1
+	"https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x64.exe"       = $legacyArgs1
+	"https://download.microsoft.com/download/5/D/8/5D8C65CB-C849-4025-8E95-C3966CAFD8AE/vcredist_x86.exe"       = $legacyArgs1
 	# 2010 - version 10.0.40219.325 SP1
-	"https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe" = $legacyArgs2
-	"https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe" = $legacyArgs2
+	"https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x64.exe"       = $legacyArgs2
+	"https://download.microsoft.com/download/1/6/5/165255E7-1014-4D0A-B094-B6A430A6BFFC/vcredist_x86.exe"       = $legacyArgs2
 	# 2012 - version 11.0.61030.0
 	"https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x64.exe" = $modernArgs
 	"https://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU_4/vcredist_x86.exe" = $modernArgs
 	# 2013 - version 12.0.40664.0
-	"https://aka.ms/highdpimfc2013x64enu" = $modernArgs
-	"https://aka.ms/highdpimfc2013x86enu" = $modernArgs
+	"https://aka.ms/highdpimfc2013x64enu"                                                                       = $modernArgs
+	"https://aka.ms/highdpimfc2013x86enu"                                                                       = $modernArgs
 	# 2015-2022 (2015+) - latest version
-	"https://aka.ms/vs/17/release/vc_redist.x64.exe" = $modernArgs
-	"https://aka.ms/vs/17/release/vc_redist.x86.exe" = $modernArgs
+	"https://aka.ms/vs/17/release/vc_redist.x64.exe"                                                            = $modernArgs
+	"https://aka.ms/vs/17/release/vc_redist.x86.exe"                                                            = $modernArgs
 }
 $num = 0; foreach ($a in $vcredists.GetEnumerator()) {
 	$num++; $vcredist = "$tempDir\vcredist$num.exe"
