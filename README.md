@@ -27,12 +27,12 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [ ] context menu - remove google drive
     -   [ ] explorer - remove grouping
     -   [ ] disable defender
--   [ ] Turn on Windows features
-    -   [ ] Hyper-V
-    -   [ ] Virtual Machine Platform
-    -   [ ] Windows Hypervisor Platform
-    -   [ ] Windows Sandbox
-    -   [ ] Windows Subsystem for Linux
+-   [x] Turn on Windows features
+    -   [x] Hyper-V
+    -   [x] Virtual Machine Platform
+    -   [x] Windows Hypervisor Platform
+    -   [x] Windows Sandbox
+    -   [x] Windows Subsystem for Linux
 
 ## ⚠️ WARNING ⚠️
 

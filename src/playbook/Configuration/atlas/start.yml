@@ -28,8 +28,25 @@ actions:
   - !writeStatus: {status: 'Disabling Internet Explorer', builds: [ '<22000' ]}
   - !run: {exe: 'DISM.exe', args: '/Online /Disable-Feature /FeatureName:"Internet-Explorer-Optional-amd64" /NoRestart', weight: 30, builds: [ '<22000' ]}
 
-  - !writeStatus: {status: 'Disabling Maths Recognizer', builds: [ '<22000' ]}
-  - !run: {exe: 'DISM.exe', args: '/Online /Remove-Capability /CapabilityName:"MathRecognizer~~~~0.0.1.0" /NoRestart', weight: 30, builds: [ '<22000' ]}
+  - !writeStatus: { status: 'Enabling development features' }
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2Root" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"MicrosoftWindowsPowerShellV2" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-All" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-Tools-All" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-Management-PowerShell" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-Hypervisor" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-Services" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Hyper-V-Management-Clients" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"HypervisorPlatform" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"VirtualMachinePlatform" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Containers-DisposableClientVM" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Containers" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Containers-HNS" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Containers-SDN" /NoRestart /All', weight: 30}
+  - !run: {exe: 'DISM.exe', args: '/Online /Enable-Feature /FeatureName:"Microsoft-Windows-Subsystem-Linux" /NoRestart /All', weight: 30}
+
+  ################ NO LOCAL BUILD ################
 
   - !writeStatus: {status: 'Disabling Steps Recorder'}
   - !run: {exe: 'DISM.exe', args: '/Online /Remove-Capability /CapabilityName:"App.StepsRecorder~~~~0.0.1.0" /NoRestart', weight: 30}
