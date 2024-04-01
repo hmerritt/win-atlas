@@ -2,11 +2,7 @@ param (
 	# Browsers
 	[switch]$Chrome,
 	[switch]$Brave,
-	[switch]$Firefox,
-	# Code editor
-	[switch]$NotepadPlusPlus,
-	[switch]$VisualStudioCode,
-	[switch]$VSCodium
+	[switch]$Firefox
 )
 
 # ----------------------------------------------------------------------------------------------------------- #
@@ -43,7 +39,8 @@ if ($Brave) {
 		if ($processesFound) {
 			Write-Output "Still running BraveSetup."
 			Start-Sleep -Seconds 2
-		} else {
+		}
+		else {
 			Remove-Item "$tempDir" -ErrorAction SilentlyContinue -Force -Recurse
 		}
 	} until (!$processesFound)
@@ -83,7 +80,7 @@ if ($Chrome) {
 # Scoop
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
 # Scoop basics
 scoop install git
@@ -144,7 +141,6 @@ scoop install veracrypt
 scoop install wireguard-np
 
 # Misc
-#scoop install google-backup-and-sync
 scoop install audacity
 scoop install bulk-rename-utility
 scoop install dupeguru
@@ -188,7 +184,7 @@ scoop hold vlc
 ##    Manual installers   ##
 ############################
 
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path","Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path","User")
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
 Write-Host "Installing Nodejs & yarn..."
 nvm install --lts
@@ -205,6 +201,12 @@ Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList 
 Write-Host "Installing Powershell 7..."
 & curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
 & msiexec.exe /package "$tempDir\PowerShell-7.msi" /quiet DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+Install-Module VirtualDesktop
+
+# Config
+# Needs to be within `%windir%\AtlasModules`
+# New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell"
+# New-Item -ItemType Directory -Path "$env:USERPROFILE\.config"
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
