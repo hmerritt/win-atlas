@@ -36,11 +36,11 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [x] Windows Hypervisor Platform
     -   [x] Windows Sandbox
     -   [x] Windows Subsystem for Linux
-    -   [ ] WSL2 + install Ubuntu LTS
+    -   [x] WSL2 + install Ubuntu LTS
 
 ## ⚠️ WARNING ⚠️
 
-This program modifies Windows _somewhat significantly_, proceed with caution.
+This program **_significantly_** modifies Windows, proceed with caution.
 
 ## Atlas `README.md`:
 
