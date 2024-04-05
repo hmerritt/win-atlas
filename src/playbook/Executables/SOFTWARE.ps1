@@ -5,14 +5,6 @@ param (
 	[switch]$Firefox
 )
 
-# ----------------------------------------------------------------------------------------------------------- #
-# Software is no longer installed with a package manager anymore to be as fast and as reliable as possible.   #
-# ----------------------------------------------------------------------------------------------------------- #
-
-$msiArgs = "/qn /quiet /norestart ALLUSERS=1 REBOOT=ReallySuppress"
-$arm = ((Get-CimInstance -Class Win32_ComputerSystem).SystemType -match 'ARM64') -or ($env:PROCESSOR_ARCHITECTURE -eq 'ARM64')
-$armString = ('x64', 'arm64')[$arm]
-
 # Create temporary directory
 $tempDir = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath $([System.Guid]::NewGuid())
 New-Item $tempDir -ItemType Directory -Force | Out-Null
@@ -185,6 +177,9 @@ scoop hold vlc
 ############################
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+Write-Host "Installing Bun..."
+powershell -c "irm bun.sh/install.ps1 | iex"
 
 Write-Host "Installing Nodejs & yarn..."
 nvm install --lts
