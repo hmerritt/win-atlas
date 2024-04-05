@@ -196,10 +196,12 @@ Write-Host "Installing Powershell 7..."
 & msiexec.exe /package "$tempDir\PowerShell-7.msi" /quiet DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 Install-Module VirtualDesktop
 
-# Config
-# Needs to be within `%windir%\AtlasModules`
-# New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell"
-# New-Item -ItemType Directory -Path "$env:USERPROFILE\.config"
+# Configs
+New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
+Copy-Item -Path "%windir%\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1" -Destination "$env:USERPROFILE\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Force
+
+New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
+Copy-Item -Path "%windir%\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
