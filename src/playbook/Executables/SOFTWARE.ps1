@@ -5,10 +5,6 @@ param (
 	[switch]$Firefox
 )
 
-# ----------------------------------------------------------------------------------------------------------- #
-# Software is no longer installed with a package manager anymore to be as fast and as reliable as possible.   #
-# ----------------------------------------------------------------------------------------------------------- #
-
 # Create temporary directory
 $tempDir = Join-Path -Path $env:TEMP -ChildPath $([System.Guid]::NewGuid())
 New-Item $tempDir -ItemType Directory -Force | Out-Null
@@ -172,6 +168,9 @@ scoop hold vlc
 ############################
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+Write-Host "Installing Bun..."
+powershell -c "irm bun.sh/install.ps1 | iex"
 
 Write-Host "Installing Nodejs & yarn..."
 nvm install --lts
