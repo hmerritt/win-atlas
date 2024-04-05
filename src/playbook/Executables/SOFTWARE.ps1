@@ -169,6 +169,13 @@ scoop hold vlc
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
+Write-Host "Installing WSL2..."
+wsl --update
+wsl --set-default-version 2
+wsl --install -d Ubuntu-22.04
+wsl --set-version Ubuntu-22.04 2
+wsl --setdefault Ubuntu-22.04
+
 Write-Host "Installing Bun..."
 powershell -c "irm bun.sh/install.ps1 | iex"
 
