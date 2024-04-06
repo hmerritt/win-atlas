@@ -38,6 +38,10 @@ actions:
     command: '.\AtlasModules\Scripts\ScriptWrappers\DisableFileSharing.ps1 -Silent'
     exeDir: true
     wait: true
+  - !cmd:
+    command: 'reg import "AtlasDesktop\3. Configuration\Context Menu Firewall Block\Enable Context Menu Firewall Block (default).reg"'
+    exeDir: true
+    wait: true
 
   ##############################################################################################
   ## SERVICES                                                                                 ##
@@ -46,13 +50,13 @@ actions:
   - !writeStatus: {status: 'Configuring services'}
 
     # ------ Microsoft recommendation - 'OK to disable' ------
-  - !service: {name: 'lfsvc', operation: change, startup: 4}
-  - !service: {name: 'MapsBroker', operation: change, startup: 4}
-  - !service: {name: 'OneSyncSvc', operation: change, startup: 4}
-  - !service: {name: 'TrkWks', operation: change, startup: 4}
-  - !service: {name: 'PcaSvc', operation: change, startup: 4}
-  - !service: {name: 'DiagTrack', operation: change, startup: 4}
-  - !service: {name: 'WSearch', operation: change, startup: 4}
+  - !service: { name: "lfsvc", operation: change, startup: 4 }
+  - !service: { name: "MapsBroker", operation: change, startup: 4 }
+  - !service: { name: "OneSyncSvc", operation: change, startup: 4 }
+  - !service: { name: "TrkWks", operation: change, startup: 4 }
+  - !service: { name: "PcaSvc", operation: change, startup: 4 }
+  - !service: { name: "DiagTrack", operation: change, startup: 4 }
+  - !service: { name: "WSearch", operation: change, startup: 4 }
 
     # ------ Microsoft recommendation - 'Do not disable' -----
   - !service: {name: 'diagnosticshub.standardcollector.service', operation: change, startup: 4}
@@ -60,15 +64,14 @@ actions:
   - !service: {name: 'DispBrokerDesktopSvc', operation: change, startup: 4} 
 
     # ------- Microsoft recommendation - 'No guideance' ------
-  - !service: {name: 'wercplsupport', operation: change, startup: 4}
+  - !service: { name: "wercplsupport", operation: change, startup: 4 }
 
   ##############################################################################################
   ## DRIVERS                                                                                  ##
   ##############################################################################################
-
-  - !writeStatus: {status: 'Configuring drivers'}
+  - !writeStatus: { status: "Configuring drivers" }
 
     # NetBios support can be enabled with the file sharing script
-  - !service: {name: 'GpuEnergyDrv', operation: change, startup: 4}
-  - !service: {name: 'NetBT', operation: change, startup: 4}
-  - !service: {name: 'Telemetry', operation: change, startup: 4}
+  - !service: { name: "GpuEnergyDrv", operation: change, startup: 4 }
+  - !service: { name: "NetBT", operation: change, startup: 4 }
+  - !service: { name: "Telemetry", operation: change, startup: 4 }

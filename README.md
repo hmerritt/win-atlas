@@ -19,17 +19,14 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
         -   [ ] [Wireguard](https://download.wireguard.com/windows-client/wireguard-installer.exe)
 -   [ ] Config files
     -   [x] Powershell
-    -   [ ] CMD
+    -   [x] CMD
     -   [x] Starship
-    -   [ ] WinSCP
 -   [ ] Visual
     -   [x] Set a custom wallpaper
     -   [x] Maximum wallpaper quality
     -   [ ] Create a new dev desktop
--   [ ] Misc
-    -   [ ] context menu - firewall block
-    -   [ ] context menu - remove google drive
-    -   [ ] explorer - remove grouping
+-   [x] Misc
+    -   [x] Context menu - add `firewall block`
 -   [x] Turn on Windows features
     -   [x] Hyper-V
     -   [x] Virtual Machine Platform
