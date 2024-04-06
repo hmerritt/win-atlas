@@ -18,9 +18,9 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
         -   [ ] [Slack](https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe)
         -   [ ] [Wireguard](https://download.wireguard.com/windows-client/wireguard-installer.exe)
 -   [ ] Config files
-    -   [ ] Powershell
+    -   [x] Powershell
     -   [ ] CMD
-    -   [ ] Starship
+    -   [x] Starship
     -   [ ] WinSCP
 -   [ ] Visual
     -   [x] Set a custom wallpaper
