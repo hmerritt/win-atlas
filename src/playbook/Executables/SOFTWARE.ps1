@@ -193,8 +193,7 @@ Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList 
 
 Write-Host "Installing Powershell 7..."
 & curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
-& msiexec.exe /package "$tempDir\PowerShell-7.msi" /quiet DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
-Install-Module VirtualDesktop
+& msiexec.exe /package "$tempDir\PowerShell-7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
 # Configs
 New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
@@ -202,6 +201,19 @@ Copy-Item -Path "%windir%\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1"
 
 New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
 Copy-Item -Path "%windir%\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
+
+# Common binaries to add to PATH
+New-Item -ItemType Directory -Path "C:\Bin" -Force
+& 7z x "%windir%\AtlasModules\Tools\bin.7z" "-oC:\Bin"
+
+$binDir = "C:\Bin"
+$currentPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
+if ($currentPath -notlike "*$binDir*") {
+	$newPath = "$currentPath;$binDir"
+	[Environment]::SetEnvironmentVariable("PATH", $newPath, "Machine")
+	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+}
+
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
