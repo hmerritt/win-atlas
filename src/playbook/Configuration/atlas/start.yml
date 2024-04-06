@@ -63,9 +63,26 @@ actions:
 
   ################ NO LOCAL BUILD ################
 
-  - !writeStatus: {status: 'Installing software'}
+    # Execution policy
+  - !writeStatus: {status: 'Allowing scoop install (ExecutionPolicy RemoteSigned CurrentUser)'}
+  - !powerShell:
+    command: 'Set-ExecutionPolicy RemoteSigned -scope CurrentUser'
+    exeDir: true
+    wait: true
+    weight: 150
+    runas: currentUserElevated
 
-    # Initial software (scoop, scoop apps, nodejs+yarn, etc...)
+    # Scoop software
+  - !writeStatus: {status: 'Installing scoop software'}
+  - !powerShell:
+    command: '.\SOFTWARESCOOP.ps1'
+    exeDir: true
+    wait: true
+    weight: 150
+    runas: currentUser
+
+    # Initial software (manual package installs, nodejs+yarn, etc...)
+  - !writeStatus: {status: 'Installing software'}
   - !powerShell:
     command: '.\SOFTWARE.ps1'
     exeDir: true
