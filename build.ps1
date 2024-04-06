@@ -1,6 +1,6 @@
 
 # Build the playbook
-7z a -tzip -p"malte" -r "Atlas Playbook.apbx" "./src/playbook"
+7z a -tzip -p"malte" -r "Atlas Playbook.apbx" "./src/playbook/*"
 
 # Copy to, and zip release
 Copy-Item -Path "Atlas Playbook.apbx" -Destination "./src/release-zip" -Force
