@@ -55,6 +55,24 @@ actions:
   - !run: {exe: 'DISM.exe', args: '/Online /Disable-Feature /FeatureName:"WindowsMediaPlayer" /NoRestart', weight: 30}
   - !run: {exe: 'DISM.exe', args: '/Online /Remove-Capability /CapabilityName:"Media.WindowsMediaPlayer~~~~0.0.12.0" /NoRestart', weight: 30}
 
+    # Execution policy
+  - !writeStatus: {status: 'Allowing scoop install (ExecutionPolicy RemoteSigned CurrentUser)'}
+  - !powerShell:
+    command: 'Set-ExecutionPolicy RemoteSigned -scope CurrentUser'
+    exeDir: true
+    wait: true
+    weight: 150
+    runas: currentUserElevated
+
+    # Scoop software
+  - !writeStatus: {status: 'Installing scoop software'}
+  - !powerShell:
+    command: '.\SOFTWARESCOOP.ps1'
+    exeDir: true
+    wait: true
+    weight: 150
+    runas: currentUser
+
     # Initial software (scoop, scoop apps, nodejs+yarn, etc...)
   - !writeStatus: {status: 'Installing utilities'}
   - !powerShell:
