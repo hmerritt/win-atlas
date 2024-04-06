@@ -40,19 +40,19 @@ if ($Brave) {
 	exit
 }
 
-# Firefox
-if ($Firefox) {
-	Write-Host "Installing Firefox..."
-	& curl.exe -LSs "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US" -o "$tempDir\firefox.exe"
-	Start-Process -FilePath "$tempDir\firefox.exe" -WindowStyle Hidden -ArgumentList '/S /ALLUSERS=1' -Wait 2>&1 | Out-Null
-	exit
-}
-
 # Chrome
 if ($Chrome) {
 	Write-Host "Installing Google Chrome..."
 	& curl.exe -LSs "https://dl.google.com/dl/chrome/install/googlechromestandaloneenterprise64.msi" -o "$tempDir\chrome.msi"
 	Start-Process -FilePath "$tempDir\chrome.msi" -WindowStyle Hidden -ArgumentList '/qn' -Wait 2>&1 | Out-Null
+	exit
+}
+
+# Firefox
+if ($Firefox) {
+	Write-Host "Installing Firefox..."
+	& curl.exe -LSs "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US" -o "$tempDir\firefox.exe"
+	Start-Process -FilePath "$tempDir\firefox.exe" -WindowStyle Hidden -ArgumentList '/S /ALLUSERS=1' -Wait 2>&1 | Out-Null
 	exit
 }
 
@@ -196,9 +196,14 @@ Write-Host "Installing Powershell 7..."
 & msiexec.exe /package "$tempDir\PowerShell-7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
 # Configs
+# CMD
+reg import "%windir%\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
+
+# Powershell
 New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
 Copy-Item -Path "%windir%\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1" -Destination "$env:USERPROFILE\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Force
 
+# Starship
 New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
 Copy-Item -Path "%windir%\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
 

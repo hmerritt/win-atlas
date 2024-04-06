@@ -11,7 +11,7 @@ actions:
   # https://learn.microsoft.com/en-us/windows-server/security/windows-services/security-guidelines-for-disabling-system-services-in-windows-server
   # https://learn.microsoft.com/en-us/windows/iot/iot-enterprise/optimize/services
 
-  - !writeStatus: {status: 'Configuring services'}
+  - !writeStatus: { status: "Configuring services" }
 
   # Backup default Windows serivces & drivers
   - !cmd:
@@ -25,7 +25,7 @@ actions:
 
   - !cmd:
     command: '"AtlasDesktop\3. Configuration\Bluetooth\Disable Bluetooth.cmd" /silent'
-    option: 'disable-bluetooth'
+    option: "disable-bluetooth"
     exeDir: true
     wait: true
   - !cmd:
@@ -36,34 +36,41 @@ actions:
     command: '"AtlasDesktop\3. Configuration\Notifications\Disable Notifications (default).cmd" /silent'
     exeDir: true
     wait: true
+  - !cmd:
+    command: 'reg import "AtlasDesktop\3. Configuration\Context Menu Firewall Block\Enable Context Menu Firewall Block (default).reg"'
+    exeDir: true
+    wait: true
 
     # ------ Microsoft recommendation - 'OK to disable' ------
-  - !service: {name: 'lfsvc', operation: change, startup: 4}
-  - !service: {name: 'MapsBroker', operation: change, startup: 4}
-  - !service: {name: 'OneSyncSvc', operation: change, startup: 4}
-  - !service: {name: 'TrkWks', operation: change, startup: 4}
-  - !service: {name: 'PcaSvc', operation: change, startup: 4}
-  - !service: {name: 'DiagTrack', operation: change, startup: 4}
-  - !service: {name: 'WSearch', operation: change, startup: 4}
+  - !service: { name: "lfsvc", operation: change, startup: 4 }
+  - !service: { name: "MapsBroker", operation: change, startup: 4 }
+  - !service: { name: "OneSyncSvc", operation: change, startup: 4 }
+  - !service: { name: "TrkWks", operation: change, startup: 4 }
+  - !service: { name: "PcaSvc", operation: change, startup: 4 }
+  - !service: { name: "DiagTrack", operation: change, startup: 4 }
+  - !service: { name: "WSearch", operation: change, startup: 4 }
 
     # ------ Microsoft recommendation - 'Do not disable' -----
-  - !service: {name: 'diagnosticshub.standardcollector.service', operation: change, startup: 4}
-  - !service: {name: 'diagsvc', operation: change, startup: 4}
-  - !service: {name: 'WdiServiceHost', operation: change, startup: 4}
-  - !service: {name: 'WdiSystemHost', operation: change, startup: 4}
-  - !service: {name: 'WerSvc', operation: change, startup: 4} 
-  - !service: {name: 'DispBrokerDesktopSvc', operation: change, startup: 4} 
+  - !service: {
+      name: "diagnosticshub.standardcollector.service",
+      operation: change,
+      startup: 4,
+    }
+  - !service: { name: "diagsvc", operation: change, startup: 4 }
+  - !service: { name: "WdiServiceHost", operation: change, startup: 4 }
+  - !service: { name: "WdiSystemHost", operation: change, startup: 4 }
+  - !service: { name: "WerSvc", operation: change, startup: 4 }
+  - !service: { name: "DispBrokerDesktopSvc", operation: change, startup: 4 }
 
     # ------- Microsoft recommendation - 'No guideance' ------
-  - !service: {name: 'wercplsupport', operation: change, startup: 4}
+  - !service: { name: "wercplsupport", operation: change, startup: 4 }
 
   ##############################################################################################
   ## DRIVERS                                                                                  ##
   ##############################################################################################
-
-  - !writeStatus: {status: 'Configuring drivers'}
+  - !writeStatus: { status: "Configuring drivers" }
 
     # NetBios support can be enabled with the file sharing script
-  - !service: {name: 'GpuEnergyDrv', operation: change, startup: 4}
-  - !service: {name: 'NetBT', operation: change, startup: 4}
-  - !service: {name: 'Telemetry', operation: change, startup: 4}
+  - !service: { name: "GpuEnergyDrv", operation: change, startup: 4 }
+  - !service: { name: "NetBT", operation: change, startup: 4 }
+  - !service: { name: "Telemetry", operation: change, startup: 4 }
