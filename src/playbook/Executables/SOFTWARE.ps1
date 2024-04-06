@@ -64,9 +64,63 @@ if ($Firefox) {
 	exit
 }
 
-####################
-##    Software    ##
-####################
+############################
+##    Manual installers   ##
+############################
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+Write-Host "Installing Bun..."
+powershell -c "irm bun.sh/install.ps1 | iex"
+
+Write-Host "Installing Nodejs & yarn..."
+nvm install lts
+nvm use lts
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+corepack enable
+corepack prepare yarn@stable --activate
+yarn set version stable
+npm -g i tsc nx
+
+Write-Host "Installing VSCode..."
+& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
+Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
+
+Write-Host "Installing Powershell 7..."
+& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
+& msiexec.exe /package "$tempDir\PowerShell-7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+
+Write-Host "Installing WSL2..."
+wsl --update
+wsl --set-default-version 2
+wsl --install -d Ubuntu-22.04
+wsl --set-version Ubuntu-22.04 2
+wsl --setdefault Ubuntu-22.04
+
+# Configs
+# CMD
+reg import "C:\Windows\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
+
+# Powershell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
+Copy-Item -Path "C:\Windows\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1" -Destination "$env:USERPROFILE\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Force
+
+# Starship
+New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
+Copy-Item -Path "C:\Windows\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
+
+# Common binaries to add to PATH
+New-Item -ItemType Directory -Path "C:\Bin" -Force
+& 7z x "C:\Windows\AtlasModules\Tools\bin.7z" "-oC:\Bin"
+
+$binDir = "C:\Bin"
+$currentPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
+if ($currentPath -notlike "*$binDir*") {
+	$newPath = "$currentPath;$binDir"
+	[Environment]::SetEnvironmentVariable("PATH", $newPath, "Machine")
+	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+}
+
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
