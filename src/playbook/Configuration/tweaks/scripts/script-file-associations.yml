@@ -4,36 +4,21 @@ description: Sets file associations for the user-selected web browser and other 
 privilege: TrustedInstaller
 actions:
   - !run:
-    exe: 'FILEASSOC.cmd'
+    exe: "FILEASSOC.cmd"
     exeDir: true
-    option: '!uninstall-edge'
+    option: "!uninstall-edge"
   - !run:
-    exe: 'FILEASSOC.cmd'
+    exe: "FILEASSOC.cmd"
     args: '"Brave"'
-    option: 'browser-brave'
+    option: "browser-brave"
     exeDir: true
   - !run:
-    exe: 'FILEASSOC.cmd'
+    exe: "FILEASSOC.cmd"
     args: '"Firefox"'
-    option: 'browser-firefox'
+    option: "browser-firefox"
     exeDir: true
   - !run:
-    exe: 'FILEASSOC.cmd'
+    exe: "FILEASSOC.cmd"
     args: '"Google Chrome"'
-    option: 'browser-chrome'
-    exeDir: true
-  - !run:
-    exe: 'FILEASSOC.cmd'
-    args: '"mpv"'
-    option: 'player-mpv'
-    exeDir: true
-  - !run:
-    exe: 'FILEASSOC.cmd'
-    args: '"MPC-HC"'
-    option: 'player-mpchc'
-    exeDir: true
-  - !run:
-    exe: 'FILEASSOC.cmd'
-    args: '"VLC"'
-    option: 'player-vlc'
+    option: "browser-chrome"
     exeDir: true
