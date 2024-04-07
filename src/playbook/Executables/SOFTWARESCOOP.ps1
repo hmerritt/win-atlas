@@ -62,7 +62,7 @@ scoop install nsis
 scoop install nssm # the Non-Sucking Service Manager
 scoop install openssli
 scoop install yt-dlp
-scoop install zoxides
+scoop install zoxide
 
 # Security
 scoop install keeweb
