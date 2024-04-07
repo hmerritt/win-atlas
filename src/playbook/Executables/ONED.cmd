@@ -1,14 +1,5 @@
 @echo off
 
-for /f "usebackq delims=" %%a in (`dir /b /a:d "%SystemDrive%\Users"`) do (
-	if exist "%SystemDrive%\Users\%%a\OneDrive" (
-		dir "%SystemDrive%\Users\%%a\OneDrive" /b | findstr "." > nul 2>&1 && (
-			echo Not stripping OneDrive as OneDrive files exist, exiting...
-			exit 6000
-		)
-	)
-)
-
 taskkill /f /im OneDrive.exe > nul 2>&1
 for %%a in (
 	"%windir%\System32\OneDriveSetup.exe"
