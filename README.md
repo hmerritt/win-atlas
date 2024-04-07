@@ -8,17 +8,17 @@ An opinionated fork of [`Atlas`](https://github.com/Atlas-OS/Atlas) ("_A transpa
     -   [x] Scoop apps
     -   [x] LTS Node.js with yarn
     -   [ ] Hardcoded installers
-        -   [ ] [Arc](https://releases.arc.net/windows/prod/Arc.appinstaller)
+        -   [x] [Arc](https://releases.arc.net/windows/prod/Arc.appinstaller)
         -   [ ] [Docker](https://desktop.docker.com/win/main/amd64/Docker%20Desktop%20Installer.exe)
-        -   [ ] [GitKraken](https://release.gitkraken.com/windows/GitKrakenSetup.exe)
+        -   [x] [GitKraken](https://release.gitkraken.com/windows/GitKrakenSetup.exe)
         -   [ ] [Google backup and sync](https://www.google.com/intl/en-GB/drive/download)
-        -   [ ] [Obsidian](https://obsidian.md)
+        -   [x] [Obsidian](https://obsidian.md)
         -   [x] [Powershell 7](https://github.com/PowerShell/PowerShell/releases)
-        -   [ ] [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/install#installing-with-windows-executable-file-via-github)
-        -   [ ] [Slack](https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe)
+        -   [x] [PowerToys](https://learn.microsoft.com/en-us/windows/powertoys/install#installing-with-windows-executable-file-via-github)
+        -   [x] [Slack](https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe)
         -   [x] [VSCode](https://code.visualstudio.com)
-        -   [ ] [Wireguard](https://download.wireguard.com/windows-client/wireguard-installer.exe)
--   [ ] Config files
+        -   [x] [Wireguard](https://download.wireguard.com/windows-client/wireguard-installer.exe)
+-   [x] Config files
     -   [x] Powershell
     -   [x] CMD
     -   [x] Starship

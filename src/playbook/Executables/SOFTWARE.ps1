@@ -70,6 +70,13 @@ if ($Firefox) {
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
+Write-Host "Installing WSL2..."
+& cmd.exe /c "wsl --update"
+& cmd.exe /c "wsl --set-default-version 2"
+& cmd.exe /c "wsl --install -d Ubuntu-22.04"
+& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
+
 Write-Host "Installing Bun..."
 irm bun.sh/install.ps1 | iex
 
@@ -82,20 +89,37 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";
 & cmd.exe /c "yarn set version stable"
 & cmd.exe /c "npm -g i tsc nx"
 
-Write-Host "Installing VSCode..."
-& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
-Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
+Write-Host "Installing Arc..."
+& curl.exe -LSs "https://releases.arc.net/windows/prod/Arc.appinstaller" -o "$tempDir\Arc.appinstaller"
+& Add-AppxPackage -AppInstallerFile "Arc.appinstaller"
+
+Write-Host "Installing GitKraken..."
+& curl.exe -LSs "https://release.gitkraken.com/windows/GitKrakenSetup.exe" -o "$tempDir\gitkraken.exe"
+Start-Process -FilePath "$tempDir\gitkraken.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
 
 Write-Host "Installing Powershell 7..."
-& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\PowerShell-7.msi"
-& msiexec.exe /package "$tempDir\PowerShell-7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\powershell7.msi"
+& msiexec.exe /package "$tempDir\powershell7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
-Write-Host "Installing WSL2..."
-& cmd.exe /c "wsl --update"
-& cmd.exe /c "wsl --set-default-version 2"
-& cmd.exe /c "wsl --install -d Ubuntu-22.04"
-& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
-& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
+Write-Host "Installing PowerToys..."
+& curl.exe -LSs "https://github.com/microsoft/PowerToys/releases/download/v0.80.0/PowerToysSetup-0.80.0-x64.exe" -o "$tempDir\powertoys.exe"
+Start-Process -FilePath "$tempDir\powertoys.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing Obsidian..."
+& curl.exe -LSs "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.12/Obsidian.1.5.12.exe" -o "$tempDir\obsidian.exe"
+Start-Process -FilePath "$tempDir\obsidian.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing Slack..."
+& curl.exe -LSs "https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe" -o "$tempDir\slack.exe"
+Start-Process -FilePath "$tempDir\slack.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing VSCode..."
+& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
+Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
+
+Write-Host "Installing Wireguard..."
+& curl.exe -LSs "https://download.wireguard.com/windows-client/wireguard-installer.exe" -o "$tempDir\wireguard.exe"
+Start-Process -FilePath "$tempDir\wireguard.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
 
 # Configs
 # CMD
