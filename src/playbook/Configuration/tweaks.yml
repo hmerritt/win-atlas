@@ -339,5 +339,6 @@ tasks:
   - tweaks\misc\delete-windows-specific-files.yml
   - tweaks\misc\config-oem-information.yml
   - tweaks\misc\rebuild-perf-counters.yml
+  - tweaks\misc\restore-default-profile-location.yml
   - tweaks\misc\restore-default-sleep-timeout.yml
   - tweaks\misc\create-shortcuts.yml

@@ -1,0 +1,30 @@
+---
+title: Restore Default Profile Location
+description: Restores the default location for profile, documents, pictures, etc (this is because occasionally OneDrive overwrites these)
+privilege: TrustedInstaller
+actions:
+  - !registryValue:
+    path: 'HKCU\SYSTEM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    value: "Desktop"
+    data: '%USERPROFILE%\Desktop'
+    type: REG_EXPAND_SZ
+  - !registryValue:
+    path: 'HKCU\SYSTEM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    value: "My Music"
+    data: '%USERPROFILE%\Music'
+    type: REG_EXPAND_SZ
+  - !registryValue:
+    path: 'HKCU\SYSTEM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    value: "My Pictures"
+    data: '%USERPROFILE%\Pictures'
+    type: REG_EXPAND_SZ
+  - !registryValue:
+    path: 'HKCU\SYSTEM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    value: "My Video"
+    data: '%USERPROFILE%\Videos'
+    type: REG_EXPAND_SZ
+  - !registryValue:
+    path: 'HKCU\SYSTEM\Software\Microsoft\Windows\CurrentVersion\Explorer\User Shell Folders'
+    value: "Personal"
+    data: '%USERPROFILE%\Documents'
+    type: REG_EXPAND_SZ
