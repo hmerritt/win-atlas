@@ -95,7 +95,6 @@ tasks:
   - tweaks\privacy\disallow-ms-accounts.yml
   - tweaks\privacy\disallow-user-activity-upload.yml
   - tweaks\privacy\search-settings.yml
-  
 
   # -------------------------------------------------------------------------- #
   #  privacy\advertising                                                       #
@@ -276,7 +275,7 @@ tasks:
   - tweaks\qol\taskbar\config-pins.yml
   - tweaks\qol\taskbar\disable-copilot.yml
   - tweaks\qol\taskbar\disable-windows-chat.yml
-  - tweaks\qol\taskbar\set-to-left.yml
+  # - tweaks\qol\taskbar\set-to-left.yml
   - tweaks\qol\taskbar\end-task.yml
 
   # -----------------------------------------------------
