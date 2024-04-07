@@ -1,0 +1,10 @@
+---
+title: Disable Security HealthService
+description: Disables Antimalware Service Excutable
+privilege: TrustedInstaller
+actions:
+  - !registryValue:
+    path: 'HKLM\SYSTEM\SYSTEM\CurrentControlSet\Services\SecurityHealthService'
+    value: "Start"
+    data: "3"
+    type: REG_DWORD
