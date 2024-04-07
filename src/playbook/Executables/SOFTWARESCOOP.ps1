@@ -100,7 +100,7 @@ scoop install xnconvert
 # Pin apps that update (too) frequently
 scoop hold gcc
 scoop hold git
-scoop hold go
+# scoop hold go
 scoop hold make
 scoop hold mkvtoolnix
 scoop hold nssm

@@ -63,16 +63,16 @@ if ($Firefox) {
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
 
 Write-Host "Installing Bun..."
-powershell -c "irm bun.sh/install.ps1 | iex"
+irm bun.sh/install.ps1 | iex
 
 Write-Host "Installing Nodejs & yarn..."
-nvm install lts
-nvm use lts
+& cmd.exe /c "nvm install lts"
+& cmd.exe /c "nvm use lts"
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-corepack enable
-corepack prepare yarn@stable --activate
-yarn set version stable
-npm -g i tsc nx
+& cmd.exe /c "corepack enable"
+& cmd.exe /c "corepack prepare yarn@stable --activate"
+& cmd.exe /c "yarn set version stable"
+& cmd.exe /c "npm -g i tsc nx"
 
 Write-Host "Installing VSCode..."
 & curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
@@ -83,15 +83,15 @@ Write-Host "Installing Powershell 7..."
 & msiexec.exe /package "$tempDir\PowerShell-7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
 Write-Host "Installing WSL2..."
-wsl --update
-wsl --set-default-version 2
-wsl --install -d Ubuntu-22.04
-wsl --set-version Ubuntu-22.04 2
-wsl --setdefault Ubuntu-22.04
+& cmd.exe /c "wsl --update"
+& cmd.exe /c "wsl --set-default-version 2"
+& cmd.exe /c "wsl --install -d Ubuntu-22.04"
+& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
 
 # Configs
 # CMD
-reg import "C:\Windows\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
+& reg import "C:\Windows\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
 
 # Powershell
 New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
