@@ -134,7 +134,7 @@ Start-Process -FilePath "$userInstallers\gitkraken.exe" -WindowStyle Hidden -Arg
 
 Write-Host "Installing Powershell 7..."
 & curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$userInstallers\powershell7.msi"
-& msiexec.exe /package "$userInstallers\powershell7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+& msiexec.exe /package "$userInstallers\powershell7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=0 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
 
 Write-Host "Installing PowerToys..."
 & curl.exe -LSs "https://github.com/microsoft/PowerToys/releases/download/v0.80.0/PowerToysSetup-0.80.0-x64.exe" -o "$userInstallers\powertoys.exe"

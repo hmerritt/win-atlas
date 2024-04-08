@@ -1,8 +1,3 @@
-# Create temporary directory
-$tempDir = Join-Path -Path $env:TEMP -ChildPath $([System.Guid]::NewGuid())
-New-Item $tempDir -ItemType Directory -Force | Out-Null
-Push-Location $tempDir
-
 ####################
 ##    Software    ##
 ####################
