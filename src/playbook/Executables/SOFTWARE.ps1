@@ -2,7 +2,9 @@ param (
 	# Browsers
 	[switch]$Chrome,
 	[switch]$Brave,
-	[switch]$Firefox
+	[switch]$Firefox,
+	# WSL
+	[switch]$WSL
 )
 
 # Create temporary directory
@@ -13,6 +15,10 @@ Push-Location $tempDir
 ####################
 ##     OPTIONS    ##
 ####################
+
+# 
+# Browsers
+# 
 
 # Brave
 if ($Brave) {
@@ -54,6 +60,47 @@ if ($Firefox) {
 	& curl.exe -LSs "https://download.mozilla.org/?product=firefox-latest-ssl&os=win64&lang=en-US" -o "$tempDir\firefox.exe"
 	Start-Process -FilePath "$tempDir\firefox.exe" -WindowStyle Hidden -ArgumentList '/S /ALLUSERS=1' -Wait 2>&1 | Out-Null
 	exit
+}
+
+# 
+# WSL
+# 
+
+if ($WSL) {
+	try {
+		Write-Host "Installing WSL2..."
+		& cmd.exe /c "wsl --update"
+		& cmd.exe /c "wsl --set-default-version 2"
+		# & cmd.exe /c "wsl --install -d Ubuntu-22.04"
+		# & cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+		# & cmd.exe /c "wsl --setdefault Ubuntu-22.04"
+	
+		Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2204-221101.AppxBundle" -OutFile "$userInstallers\ubuntu2204.AppxBundle" -UseBasicParsing
+		Add-AppxPackage -Path "$userInstallers\ubuntu2204.AppxBundle"
+		$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+	
+		$env:DEBIAN_FRONTEND = "noninteractive"
+		$env:WSLENV += ":DEBIAN_FRONTEND"
+		$distro = "ubuntu2204"
+		$username = $env:USERNAME
+		$password = "lol"
+	
+		& $distro install --root
+		& $distro config --default-user "root"
+		& $distro run useradd -m "$username"
+		& $distro run sh -c "echo "${username}:${password}" | chpasswd" # wrapped in sh -c to get the pipe to work
+		& $distro run chsh -s /bin/bash "$username"
+		& $distro run usermod -aG adm, cdrom, sudo, dip, plugdev "$username"
+		& $distro run sh -c 'apt-get update -y && apt-get full-upgrade -y && apt-get autoremove -y && apt-get autoclean'
+		& $distro run sh -c 'apt install bison curl git gawk gpg htop rsync screen software-properties-common tar pigz unzip wget zip -y'
+		& $distro config --default-user "$username"
+	
+		& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+		& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
+	}
+	catch {
+		Write-Host "WSL2 installation failed"
+	}
 }
 
 ############################
@@ -178,41 +225,6 @@ if ($currentPath -notlike "*$binDir*") {
 	$newPath = "$currentPath;$binDir"
 	[Environment]::SetEnvironmentVariable("PATH", $newPath, "Machine")
 	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-}
-
-try {
-	Write-Host "Installing WSL2..."
-	& cmd.exe /c "wsl --update"
-	& cmd.exe /c "wsl --set-default-version 2"
-	# & cmd.exe /c "wsl --install -d Ubuntu-22.04"
-	# & cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
-	# & cmd.exe /c "wsl --setdefault Ubuntu-22.04"
-	
-	Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2204-221101.AppxBundle" -OutFile "$userInstallers\ubuntu2204.AppxBundle" -UseBasicParsing
-	Add-AppxPackage -Path "$userInstallers\ubuntu2204.AppxBundle"
-	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-	
-	$env:DEBIAN_FRONTEND = "noninteractive"
-	$env:WSLENV += ":DEBIAN_FRONTEND"
-	$distro = "ubuntu2204"
-	$username = $env:USERNAME
-	$password = "lol"
-	
-	& $distro install --root
-	& $distro config --default-user "root"
-	& $distro run useradd -m "$username"
-	& $distro run sh -c "echo "${username}:${password}" | chpasswd" # wrapped in sh -c to get the pipe to work
-	& $distro run chsh -s /bin/bash "$username"
-	& $distro run usermod -aG adm, cdrom, sudo, dip, plugdev "$username"
-	& $distro run sh -c 'apt-get update -y && apt-get full-upgrade -y && apt-get autoremove -y && apt-get autoclean'
-	& $distro run sh -c 'apt install bison curl git gawk gpg htop rsync screen software-properties-common tar pigz unzip wget zip -y'
-	& $distro config --default-user "$username"
-	
-	& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
-	& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
-}
-catch {
-	Write-Host "WSL2 installation failed"
 }
 
 # Remove temporary directory
