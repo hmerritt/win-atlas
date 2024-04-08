@@ -183,7 +183,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";
 
 Write-Host "Installing Arc..."
 & curl.exe -LSs "https://releases.arc.net/windows/prod/Arc.appinstaller" -o "$userInstallers\Arc.appinstaller"
-& Add-AppxPackage -AppInstallerFile "Arc.appinstaller"
+& Add-AppxPackage -AppInstallerFile "$userInstallers\Arc.appinstaller"
 
 Write-Host "Installing GitKraken..."
 & curl.exe -LSs "https://release.gitkraken.com/windows/GitKrakenSetup.exe" -o "$userInstallers\gitkraken.exe"
