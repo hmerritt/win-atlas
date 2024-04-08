@@ -67,7 +67,6 @@ scoop install zoxide
 scoop install keeweb
 scoop install malwarebytes
 scoop install veracrypt
-scoop install wireguard-np
 
 # Misc
 scoop install audacity
@@ -75,7 +74,7 @@ scoop install bulk-rename-utility
 scoop install dupeguru
 scoop install everything
 scoop install flac
-scoop install icaros-np
+# scoop install icaros-np # Requires admin rights (installed within src/playbook/Executables/SOFTWARE.ps1)
 scoop install lite-xl
 scoop install losslesscut
 scoop install mkvtoolnix

@@ -161,6 +161,9 @@ $userDownloads = "$env:USERPROFILE\Downloads"
 $userInstallers = "$userDownloads\archives"
 New-Item -ItemType Directory -Path "$userInstallers" -Force
 
+Write-Host "Installing scoop apps that require admin rights..."
+scoop install icaros-np
+
 Write-Host "Installing Bun..."
 & powershell -c "irm bun.sh/install.ps1 | iex"
 
