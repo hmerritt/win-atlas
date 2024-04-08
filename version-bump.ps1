@@ -34,7 +34,9 @@ $fileTypes = @("*.conf", "*.yml", "*.yaml")
 $rootPath = "./"
 
 Get-ChildItem -Path $rootPath -Recurse -Include $fileTypes | ForEach-Object {
-    $content = Get-Content $_.FullName
-    $newContent = $content -replace $searchTerm, $replaceTerm -replace "\r\n", "`n"
-    Set-Content -Path $_.FullName -Value $newContent -Newline "`n"
+    $content = Get-Content $_.FullName -Raw
+    $newContent = $content -replace $searchTerm, $replaceTerm
+    if ($content -ne $newContent) {
+        Set-Content -Path $_.FullName -Value $newContent
+    }
 }
