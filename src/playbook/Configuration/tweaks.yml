@@ -341,4 +341,3 @@ tasks:
   - tweaks\misc\rebuild-perf-counters.yml
   - tweaks\misc\restore-default-profile-location.yml
   - tweaks\misc\restore-default-sleep-timeout.yml
-  - tweaks\misc\create-shortcuts.yml
