@@ -2,6 +2,8 @@
 ##    Software    ##
 ####################
 
+Start-Transcript -Path "$env:USERPROFILE\Downloads\archives\logs\SOFTWARE_SCOOP.log"
+
 # Scoop
 Set-ExecutionPolicy RemoteSigned -scope CurrentUser
 Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
@@ -106,3 +108,4 @@ scoop hold rufus
 scoop hold vlc
 
 $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+Stop-Transcript
