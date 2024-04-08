@@ -82,6 +82,16 @@ actions:
     weight: 150
     runas: currentUserElevated
 
+    # WSL
+  - !writeStatus: {status: 'Installing WSL', option: 'install-wsl'}
+  - !powerShell:
+    command: '.\SOFTWARE.ps1 -WSL'
+    exeDir: true
+    wait: true
+    weight: 120
+    option: 'install-wsl'
+    runas: currentUserElevated
+
     # Browsers
   - !writeStatus: {status: 'Installing Brave', option: 'browser-brave'}
   - !powerShell:
