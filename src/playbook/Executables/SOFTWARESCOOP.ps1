@@ -5,9 +5,11 @@
 Start-Transcript -Path "$env:USERPROFILE\Downloads\archives\logs\SOFTWARE_SCOOP.log"
 
 # Scoop
-Set-ExecutionPolicy RemoteSigned -scope CurrentUser
-Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+if (-not (where.exe scoop)) {
+    # Set-ExecutionPolicy RemoteSigned -scope CurrentUser # See src/playbook/Configuration/atlas/start.yml
+    Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
+    $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+}
 
 # Scoop basics
 scoop install git
