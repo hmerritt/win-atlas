@@ -7,6 +7,8 @@ param (
 	[switch]$WSL
 )
 
+Start-Transcript -Path "$env:USERPROFILE\Downloads\archives\logs\SOFTWARE.log"
+
 # Create temporary directory
 $tempDir = Join-Path -Path $([System.IO.Path]::GetTempPath()) -ChildPath $([System.Guid]::NewGuid())
 New-Item $tempDir -ItemType Directory -Force | Out-Null
@@ -164,7 +166,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";
 
 Write-Host "Creating directory for installers..."
 $userDownloads = "$env:USERPROFILE\Downloads"
-$userInstallers = "$userDownloads\installers"
+$userInstallers = "$userDownloads\archives"
 New-Item -ItemType Directory -Path "$userInstallers" -Force
 
 Write-Host "Installing Bun..."
@@ -238,3 +240,5 @@ if ($currentPath -notlike "*$binDir*") {
 # Remove temporary directory
 Pop-Location
 Remove-Item -Path $tempDir -Force -Recurse *>$null
+
+Stop-Transcript
