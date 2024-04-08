@@ -57,86 +57,8 @@ if ($Firefox) {
 }
 
 ############################
-##    Manual installers   ##
+##     MISC installers    ##
 ############################
-
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-
-Write-Host "Installing WSL2..."
-& cmd.exe /c "wsl --update"
-& cmd.exe /c "wsl --set-default-version 2"
-& cmd.exe /c "wsl --install -d Ubuntu-22.04"
-& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
-& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
-
-Write-Host "Installing Bun..."
-irm bun.sh/install.ps1 | iex
-
-Write-Host "Installing Nodejs & yarn..."
-& cmd.exe /c "nvm install lts"
-& cmd.exe /c "nvm use lts"
-$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-& cmd.exe /c "corepack enable"
-& cmd.exe /c "corepack prepare yarn@stable --activate"
-& cmd.exe /c "yarn set version stable"
-& cmd.exe /c "npm -g i tsc nx"
-
-Write-Host "Installing Arc..."
-& curl.exe -LSs "https://releases.arc.net/windows/prod/Arc.appinstaller" -o "$tempDir\Arc.appinstaller"
-& Add-AppxPackage -AppInstallerFile "Arc.appinstaller"
-
-Write-Host "Installing GitKraken..."
-& curl.exe -LSs "https://release.gitkraken.com/windows/GitKrakenSetup.exe" -o "$tempDir\gitkraken.exe"
-Start-Process -FilePath "$tempDir\gitkraken.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
-
-Write-Host "Installing Powershell 7..."
-& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$tempDir\powershell7.msi"
-& msiexec.exe /package "$tempDir\powershell7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
-
-Write-Host "Installing PowerToys..."
-& curl.exe -LSs "https://github.com/microsoft/PowerToys/releases/download/v0.80.0/PowerToysSetup-0.80.0-x64.exe" -o "$tempDir\powertoys.exe"
-Start-Process -FilePath "$tempDir\powertoys.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
-
-Write-Host "Installing Obsidian..."
-& curl.exe -LSs "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.12/Obsidian.1.5.12.exe" -o "$tempDir\obsidian.exe"
-Start-Process -FilePath "$tempDir\obsidian.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
-
-Write-Host "Installing Slack..."
-& curl.exe -LSs "https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe" -o "$tempDir\slack.exe"
-Start-Process -FilePath "$tempDir\slack.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
-
-Write-Host "Installing VSCode..."
-& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$tempDir\vscode.exe"
-Start-Process -FilePath "$tempDir\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
-
-Write-Host "Installing Wireguard..."
-& curl.exe -LSs "https://download.wireguard.com/windows-client/wireguard-installer.exe" -o "$tempDir\wireguard.exe"
-Start-Process -FilePath "$tempDir\wireguard.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
-
-# Configs
-# CMD
-& reg import "C:\Windows\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
-
-# Powershell
-New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
-Copy-Item -Path "C:\Windows\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1" -Destination "$env:USERPROFILE\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Force
-
-# Starship
-New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
-Copy-Item -Path "C:\Windows\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
-
-# Common binaries to add to PATH
-New-Item -ItemType Directory -Path "C:\Bin" -Force
-& 7z x "C:\Windows\AtlasModules\Tools\bin.7z" "-oC:\Bin"
-
-$binDir = "C:\Bin"
-$currentPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
-if ($currentPath -notlike "*$binDir*") {
-	$newPath = "$currentPath;$binDir"
-	[Environment]::SetEnvironmentVariable("PATH", $newPath, "Machine")
-	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
-}
-
 
 # Visual C++ Runtimes (referred to as vcredists for short)
 # https://learn.microsoft.com/en-US/cpp/windows/latest-supported-vc-redist
@@ -178,6 +100,115 @@ Write-Host "Extracting legacy DirectX runtimes..."
 Start-Process -FilePath "$tempDir\directx.exe" -WindowStyle Hidden -ArgumentList "/q /c /t:`"$tempDir\directx`"" -Wait 2>&1 | Out-Null
 Write-Host "Installing legacy DirectX runtimes..."
 Start-Process -FilePath "$tempDir\directx\dxsetup.exe" -WindowStyle Hidden -ArgumentList '/silent' -Wait 2>&1 | Out-Null
+
+############################
+##    Manual installers   ##
+############################
+
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+Write-Host "Creating directory for installers..."
+$userDownloads = "$env:USERPROFILE\Downloads"
+$userInstallers = "$userDownloads\installers"
+New-Item -ItemType Directory -Path "$userInstallers" -Force
+
+Write-Host "Installing Bun..."
+& powershell -c "irm bun.sh/install.ps1 | iex"
+
+Write-Host "Installing Nodejs & yarn..."
+& cmd.exe /c "nvm install lts"
+& cmd.exe /c "nvm use lts"
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+& cmd.exe /c "corepack enable"
+& cmd.exe /c "corepack prepare yarn@stable --activate"
+& cmd.exe /c "yarn set version stable"
+& cmd.exe /c "npm -g i tsc nx"
+
+Write-Host "Installing Arc..."
+& curl.exe -LSs "https://releases.arc.net/windows/prod/Arc.appinstaller" -o "$userInstallers\Arc.appinstaller"
+& Add-AppxPackage -AppInstallerFile "Arc.appinstaller"
+
+Write-Host "Installing GitKraken..."
+& curl.exe -LSs "https://release.gitkraken.com/windows/GitKrakenSetup.exe" -o "$userInstallers\gitkraken.exe"
+Start-Process -FilePath "$userInstallers\gitkraken.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing Powershell 7..."
+& curl.exe -LSs "https://github.com/PowerShell/PowerShell/releases/download/v7.4.1/PowerShell-7.4.1-win-x64.msi" -o "$userInstallers\powershell7.msi"
+& msiexec.exe /package "$userInstallers\powershell7.msi" /passive /qn DISABLE_TELEMETRY=1 ADD_EXPLORER_CONTEXT_MENU_OPENPOWERSHELL=0 ADD_FILE_CONTEXT_MENU_RUNPOWERSHELL=1 ENABLE_PSREMOTING=0 REGISTER_MANIFEST=1 USE_MU=1 ENABLE_MU=1 ADD_PATH=1
+
+Write-Host "Installing PowerToys..."
+& curl.exe -LSs "https://github.com/microsoft/PowerToys/releases/download/v0.80.0/PowerToysSetup-0.80.0-x64.exe" -o "$userInstallers\powertoys.exe"
+Start-Process -FilePath "$userInstallers\powertoys.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing Obsidian..."
+& curl.exe -LSs "https://github.com/obsidianmd/obsidian-releases/releases/download/v1.5.12/Obsidian.1.5.12.exe" -o "$userInstallers\obsidian.exe"
+Start-Process -FilePath "$userInstallers\obsidian.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing Slack..."
+& curl.exe -LSs "https://downloads.slack-edge.com/desktop-releases/windows/x64/4.37.98/SlackSetup.exe" -o "$userInstallers\slack.exe"
+Start-Process -FilePath "$userInstallers\slack.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+Write-Host "Installing VSCode..."
+& curl.exe -LSs "https://code.visualstudio.com/sha/download?build=stable&os=win32-x64" -o "$userInstallers\vscode.exe"
+Start-Process -FilePath "$userInstallers\vscode.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /NORESTART /MERGETASKS=!runcode' -Wait 2>&1 | Out-Null
+
+Write-Host "Installing Wireguard..."
+& curl.exe -LSs "https://download.wireguard.com/windows-client/wireguard-installer.exe" -o "$userInstallers\wireguard.exe"
+Start-Process -FilePath "$userInstallers\wireguard.exe" -WindowStyle Hidden -ArgumentList '/VERYSILENT /silent /install /norestart' | Out-Null
+
+# Configs
+# CMD
+& reg import "C:\Windows\AtlasDesktop\3. Configuration\CMD\Enable CMD config file (default).reg"
+
+# Powershell
+New-Item -ItemType Directory -Path "$env:USERPROFILE\Documents\Powershell" -Force
+Copy-Item -Path "C:\Windows\AtlasModules\Configs\Microsoft.PowerShell_profile.ps1" -Destination "$env:USERPROFILE\Documents\Powershell\Microsoft.PowerShell_profile.ps1" -Force
+
+# Starship
+New-Item -ItemType Directory -Path "$env:USERPROFILE\.config" -Force
+Copy-Item -Path "C:\Windows\AtlasModules\Configs\starship.toml" -Destination "$env:USERPROFILE\.config\starship.toml" -Force
+
+# Common binaries to add to PATH
+New-Item -ItemType Directory -Path "C:\Bin" -Force
+& 7z x "C:\Windows\AtlasModules\Tools\bin.7z" "-oC:\Bin"
+
+$binDir = "C:\Bin"
+$currentPath = [Environment]::GetEnvironmentVariable("PATH", "Machine")
+if ($currentPath -notlike "*$binDir*") {
+	$newPath = "$currentPath;$binDir"
+	[Environment]::SetEnvironmentVariable("PATH", $newPath, "Machine")
+	$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+}
+
+Write-Host "Installing WSL2..."
+& cmd.exe /c "wsl --update"
+& cmd.exe /c "wsl --set-default-version 2"
+# & cmd.exe /c "wsl --install -d Ubuntu-22.04"
+# & cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+# & cmd.exe /c "wsl --setdefault Ubuntu-22.04"
+
+Invoke-WebRequest -Uri "https://wslstorestorage.blob.core.windows.net/wslblob/Ubuntu2204-221101.AppxBundle" -OutFile "$userInstallers\ubuntu2204.appx" -UseBasicParsing
+Add-AppxPackage -Path "$userInstallers\ubuntu2204.appx"
+$env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";" + [System.Environment]::GetEnvironmentVariable("Path", "User")
+
+$env:DEBIAN_FRONTEND = "noninteractive"
+$env:WSLENV += ":DEBIAN_FRONTEND"
+$distro = "ubuntu2204"
+$username = $env:USERNAME
+$password = "lol"
+
+& $distro install --root
+& $distro config --default-user "root"
+& $distro run useradd -m "$username"
+& $distro run sh -c "echo "${username}:${password}" | chpasswd" # wrapped in sh -c to get the pipe to work
+& $distro run chsh -s /bin/bash "$username"
+& $distro run usermod -aG adm, cdrom, sudo, dip, plugdev "$username"
+& $distro run sh -c 'apt-get update -y && apt-get full-upgrade -y && apt-get autoremove -y && apt-get autoclean'
+& $distro run sh -c 'apt install bison curl git gawk gpg htop rsync screen software-properties-common tar pigz unzip wget zip -y'
+& $distro config --default-user "$username"
+
+& cmd.exe /c "wsl --set-version Ubuntu-22.04 2"
+& cmd.exe /c "wsl --setdefault Ubuntu-22.04"
 
 # Remove temporary directory
 Pop-Location
