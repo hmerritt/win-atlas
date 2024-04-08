@@ -11,7 +11,7 @@ actions:
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
     value: "Model"
-    data: "AtlasOS v0.4.2986"
+    data: "AtlasOS v0.4.2987"
     type: REG_SZ
   - !registryValue:
     path: 'HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\OEMInformation'
@@ -28,5 +28,6 @@ actions:
     value: "WinreFallbackFixed"
     data: "1"
     type: REG_SZ
+
 
 

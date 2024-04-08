@@ -5,7 +5,7 @@ $currentVersion = ""
 $currentVersionWithoutPatch = ""
 
 # Get current version in playbook.conf
-$content = Get-Content -Path "./src/playbook/playbook.conf" -Raw
+$content = Get-Content -Path "../src/playbook/playbook.conf" -Raw
 if ($content -match "v\d+\.\d+\.\d+") {
     $currentVersion = $Matches[0] -replace 'v', ''
 }
@@ -31,7 +31,7 @@ Write-Output "Version  $currentVersion => $version"
 $searchTerm = $currentVersion
 $replaceTerm = $version
 $fileTypes = @("*.conf", "*.yml", "*.yaml")
-$rootPath = "./"
+$rootPath = "../"
 
 Get-ChildItem -Path $rootPath -Recurse -Include $fileTypes | ForEach-Object {
     $content = Get-Content $_.FullName -Raw
