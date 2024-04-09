@@ -174,6 +174,7 @@ $env:Path = [System.Environment]::GetEnvironmentVariable("Path", "Machine") + ";
 & cmd.exe /c "corepack enable"
 & cmd.exe /c "corepack prepare yarn@stable --activate"
 & cmd.exe /c "yarn set version stable"
+& cmd.exe /c "yarn plugin import interactive-tools"
 & cmd.exe /c "npm -g i tsc nx"
 
 Write-Host "Installing Arc..."
